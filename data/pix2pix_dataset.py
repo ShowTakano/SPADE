@@ -64,18 +64,22 @@ class Pix2pixDataset(BaseDataset):
         label_tensor[label_tensor == 255] = self.opt.label_nc  # 'unknown' is opt.label_nc
 
         # input image (real images)
-        image_path = self.image_paths[index]
-        assert self.paths_match(label_path, image_path), \
-            "The label_path %s and image_path %s don't match." % \
-            (label_path, image_path)
-        image = Image.open(image_path)
-        image = image.convert('RGB')
+        if self.opt.use_generated_label_as_input:
+            image_tensor = 0
+            image_path = self.label_paths[index]
+        else:
+            image_path = self.image_paths[index]
+            assert self.paths_match(label_path, image_path), \
+                "The label_path %s and image_path %s don't match." % \
+                (label_path, image_path)
+            image = Image.open(image_path)
+            image = image.convert('RGB')
 
-        transform_image = get_transform(self.opt, params)
-        image_tensor = transform_image(image)
+            transform_image = get_transform(self.opt, params)
+            image_tensor = transform_image(image)
 
         # if using instance maps
-        if self.opt.no_instance:
+        if self.opt.no_instance or self.opt.use_generated_label_as_input:
             instance_tensor = 0
         else:
             instance_path = self.instance_paths[index]
