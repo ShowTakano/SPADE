@@ -12,6 +12,9 @@ class_name = json.load(json_file)
 label_dir = "./datasets/coco_stuff/val_label/"
 globed = glob.glob(label_dir + "*.png")
 
+print(class_name[str(0)]["class_name"])
+print(class_name[str(0)]["rgb_label"])
+
 for g in globed:
     print(g)
     label = cv2.imread(g)
@@ -22,5 +25,6 @@ for g in globed:
     for class_index in unique:
         if class_index > 181: # クラスインデックスは0~181まで。255はunlabeled
             class_index = 255
-        print(class_name[str(class_index)])
+        print("class_name", class_name[str(class_index)]["class_name"])
+        print("rgb_label", class_name[str(class_index)]["rgb_label"])
     
