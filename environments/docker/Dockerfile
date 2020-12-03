@@ -36,3 +36,4 @@ RUN pip install torchvision
 RUN pip install dominate>=2.3.1
 RUN pip install dill
 RUN pip install scikit-image
+RUN pip install opencv-python==4.1.1.26
