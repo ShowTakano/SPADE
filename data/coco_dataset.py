@@ -31,7 +31,7 @@ class CocoDataset(Pix2pixDataset):
         root = opt.dataroot
         phase = 'val' if opt.phase == 'test' else opt.phase
 
-        label_dir = os.path.join(root, '%s_label' % phase)
+        label_dir = os.path.join(root, '%s_label' % phase) if opt.input_label_dir == '%s_label'  else opt.input_label_dir
         label_paths = make_dataset(label_dir, recursive=False, read_cache=True)
 
         if not opt.coco_no_portraits and opt.isTrain:
