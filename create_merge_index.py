@@ -12,6 +12,7 @@ from util.visualizer import Visualizer
 from util import html
 
 import glob
+import re
 
 opt = TestOptions().parse()
 
@@ -23,7 +24,15 @@ webpage = html.HTML(web_dir,
                     'Experiment = %s, Phase = %s, Epoch = %s' %
                     (opt.name, opt.phase, opt.which_epoch))
 
-files = sorted(glob.glob("./datasets/coco_stuff/val_label_org/*.png"))
+def atoi(text):
+	return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+	return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+base_label_dir = opt.base_label_dir
+print(base_label_dir)
+files = sorted(glob.glob(os.path.join(base_label_dir, '*.png')), key=natural_keys)
 for file in files:
 	filename = os.path.basename(file)
 	filename_no_extension = os.path.splitext(filename)[0]

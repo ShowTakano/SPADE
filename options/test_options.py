@@ -14,6 +14,7 @@ class TestOptions(BaseOptions):
         parser.add_argument('--how_many', type=int, default=float("inf"), help='how many test images to run')
         parser.add_argument('--use_generated_label_as_input', action='store_true', help='if specified, use val_label as val_img and val_inst')
         parser.add_argument('--input_label_dir', type=str, default='%s_label', help='read input labels here.')
+        parser.add_argument('--base_label_dir', type=str, default='./datasets/coco_stuff/val_label', help='read base labels here for merge_index.html.')
 
         parser.set_defaults(preprocess_mode='scale_width_and_crop', crop_size=256, load_size=256, display_winsize=256)
         parser.set_defaults(serial_batches=True)
