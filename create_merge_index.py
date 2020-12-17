@@ -70,6 +70,12 @@ for file in files:
 	ims.append(image_name)
 	txts.append(label)
 	links.append(image_name)
+	# deeplab-pytorch label from SPADE image
+	image_name = '../ss_predicted_label_2/%s.png' % (filename_no_extension)
+	label = 'deeplab-pytorch-label from spade-image'
+	ims.append(image_name)
+	txts.append(label)
+	links.append(image_name)
 	webpage.add_images(ims, txts, links, width=opt.display_winsize)
 
 webpage.save()
