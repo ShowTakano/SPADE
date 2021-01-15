@@ -55,6 +55,19 @@ class HTML:
                             #p(txt.encode('utf-8'))
                             p(txt)
 
+    def add_images_and_lines(self, ims, txts, links, width=512):
+        self.add_table()
+        with self.t:
+            with tr():
+                for im, txt, link in zip(ims, txts, links):
+                    with td(style="word-wrap: break-word;", halign="center", valign="top"):
+                        with p():
+                            with a(href=os.path.join('images', link)):
+                                img(style="width:%dpx" % (width), src=os.path.join('images', im))
+                            br()
+                            for line in txt.split('\n'):
+                            	p(line)
+
     def save(self):
         html_file = os.path.join(self.web_dir, self.html_name)
         f = open(html_file, 'wt')
