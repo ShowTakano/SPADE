@@ -206,7 +206,7 @@ filename2 = "./datasets/coco_stuff/val_label/000000122166.png" # 自転車の人
 # 路肩の人間を道路へ飛び出させる
 target_class_name = "person"
 lshif = LabelShifter(filename1, target_class_name, debug=False)
-for i in range(15):
+for i in range(41):
     label_generated = lshif.shift(pix=10)
 
     filename_dst = filename1.replace(".png", "_" + str(i) + ".png")
