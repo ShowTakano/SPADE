@@ -184,7 +184,9 @@ class LabelCopyandPaster():
             img_tmp[offset_y:label.shape[0]+offset_y, offset_x:label.shape[1]+offset_x, :] = img
             mask_tmp[offset_y:label.shape[0]+offset_y, offset_x:label.shape[1]+offset_x] = mask_tclass_n_cntr
             label_dst = np.where(mask_tmp == 255, label_tmp, label_dst)
+            label_dst = np.where(lgen_dst.label==142, 142, label_dst)
             img_dst = np.where(cv2.merge([mask_tmp, mask_tmp, mask_tmp]) == [255,255,255], img_tmp, img_dst)
+            img_dst = np.where(cv2.merge([lgen_dst.label, lgen_dst.label, lgen_dst.label]) == [142,142,142], lgen_dst.img, img_dst)
         if self.debug:
             cv2.imshow("test", img_dst)
             cv2.waitKey(0)
@@ -220,9 +222,9 @@ target_class_names = ["person", "bicycle", "backpack"]
 target_class_indexes = [-1, 0, 0]
 lcoppaste = LabelCopyandPaster(filename2, target_class_names, target_class_indexes, filename1, debug=False)
 
-scales =     [3.0, 2.9, 2.8, 2.7, 2.6, 2.5, 2.4, 2.3, 2.2, 2.1, 2.0]
-offset_xs =  [ 85,  80,  75,  70,  65,  60,  55,  50,  45,  40,  35]
-offset_ys =  [165, 160, 155, 150, 145, 140, 135, 130, 125, 120, 115]
+scales =     [6,   5.8, 5.6, 5.4, 5.2,   5, 4.8, 4.6, 4.4, 4.2,  4, 3.8, 3.6, 3.4, 3.2, 3.0,  2.8,  2.6,  2.4,  2.2,  2.0, 1.8, 1.6, 1.4, 1.2]
+offset_xs =  [135, 131, 127, 123, 119, 115, 111, 107, 103,  99, 95,  94,  90,  86,  82,  75,   67,   59,   51,   43,   35,  25,  15,   5,   0]
+offset_ys =  [225, 223, 221, 219, 217, 215, 213, 211, 209, 207,205, 199, 193, 187, 181, 175,  163,  151,  139,  127,  115, 105,  95,  85,  75]
 
 for i in range(len(scales)):
     label_generated, image_generated = lcoppaste.copypaste(scales[i], offset_xs[i], offset_ys[i])
